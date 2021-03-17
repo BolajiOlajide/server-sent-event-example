@@ -13,7 +13,15 @@ app.get('/stream', (req, res) => {
   // the protocol dictates that each stream has to start with 'data: ' and end with
   // two newlines '\n\n'
   res.write('data: ' + 'hello\n\n');
+  send(res);
 });
+
+let i = 0;
+function send(res) {
+  res.write('data: ' + `${i++} -- hello\n\n`);
+
+  setTimeout(() => send(res), 1000);
+}
 
 app.listen(8080);
 console.log('Listening on port 8080');
